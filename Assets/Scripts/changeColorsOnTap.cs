@@ -1,28 +1,26 @@
 using UnityEngine;
+using UnityEngine.UI;
 
-public class ChangeColorOnTouch : MonoBehaviour
+public class ModificarModelo : MonoBehaviour
 {
-    private Renderer objectRenderer;
+    public GameObject modelo3D;
+    public Button boton;
 
-    void Start()
+    public void CambiarColor()
     {
-        // Obtén el Renderer del objeto para poder cambiar el color
-        objectRenderer = GetComponent<Renderer>();
-    }
-
-    void Update()
-    {
-        // Detectar si hay un toque en la pantalla
-        if (Input.GetMouseButtonDown(0))
+        Renderer renderer = modelo3D.GetComponent<Renderer>();
+        if (renderer != null)
         {
-            // Cambiar el color del material del objeto
-            objectRenderer.material.color = GetRandomColor();
-        }
-    }
+            Color nuevoColor = new Color(Random.value, Random.value, Random.value);
 
-    // Método para generar un color aleatorio
-    Color GetRandomColor()
-    {
-        return new Color(Random.value, Random.value, Random.value);
+            renderer.material.color = nuevoColor;
+
+            ColorBlock colorBlock = boton.colors;
+            colorBlock.normalColor = nuevoColor;
+            colorBlock.highlightedColor = nuevoColor;
+            colorBlock.pressedColor = nuevoColor * 0.9f;
+            colorBlock.selectedColor = nuevoColor;
+            boton.colors = colorBlock;
+        }
     }
 }
